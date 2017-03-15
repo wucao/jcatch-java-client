@@ -11,6 +11,10 @@ public class SpringAsycJCatchClient extends JCatchClient {
 
     private ThreadPoolTaskExecutor executor;
 
+    public void setExecutor(ThreadPoolTaskExecutor executor) {
+        this.executor = executor;
+    }
+
     private void asycSubmitQuietly(final Exception e) {
         executor.execute(new Runnable() {
             public void run() {
