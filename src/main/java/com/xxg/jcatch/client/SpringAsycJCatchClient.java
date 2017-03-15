@@ -15,7 +15,8 @@ public class SpringAsycJCatchClient extends JCatchClient {
         this.executor = executor;
     }
 
-    private void asycSubmitQuietly(final Exception e) {
+    @Override
+    public void submit(final Exception e) {
         try {
             executor.execute(new Runnable() {
                 public void run() {

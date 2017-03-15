@@ -39,22 +39,18 @@ public class JCatchClient {
         this.appId = appId;
     }
 
-    public void submit(Exception e) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-        objectOutputStream.writeObject(e);
-        IOUtils.closeQuietly(objectOutputStream);
-        byte[] bytes = byteArrayOutputStream.toByteArray();
-        String res = HttpUtil.post(baseUrl + "/api/submitException?appId=" + URLEncoder.encode(appId, "UTF-8"), bytes, "UTF-8", "application/octet-stream");
-        JSONObject jsonObject = new JSONObject(res);
-        if(!jsonObject.getBoolean("success")) {
-            throw new IOException("Submit failed: " + res);
-        }
-    }
-
-    public void submitQuietly(Exception e) {
+    public void submit(Exception e)  {
         try {
-            submit(e);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(e);
+            IOUtils.closeQuietly(objectOutputStream);
+            byte[] bytes = byteArrayOutputStream.toByteArray();
+            String res = HttpUtil.post(baseUrl + "/api/submitException?appId=" + URLEncoder.encode(appId, "UTF-8"), bytes, "UTF-8", "application/octet-stream");
+            JSONObject jsonObject = new JSONObject(res);
+            if (!jsonObject.getBoolean("success")) {
+                throw new IOException("Submit failed: " + res);
+            }
         } catch (Exception exception) {
             exception.getStackTrace();
         }
