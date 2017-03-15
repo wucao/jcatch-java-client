@@ -16,15 +16,19 @@ public class SpringAsycJCatchClient extends JCatchClient {
     }
 
     private void asycSubmitQuietly(final Exception e) {
-        executor.execute(new Runnable() {
-            public void run() {
-                try {
-                    SpringAsycJCatchClient.super.submit(e);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+        try {
+            executor.execute(new Runnable() {
+                public void run() {
+                    try {
+                        SpringAsycJCatchClient.super.submit(e);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception exception) {
+            exception.getStackTrace();
+        }
     }
 
 }
