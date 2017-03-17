@@ -10,7 +10,7 @@
     <dependency>
         <groupId>com.xxg.jcatch</groupId>
         <artifactId>jcatch-client</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.6</version>
     </dependency>
 </dependencies>
 ```

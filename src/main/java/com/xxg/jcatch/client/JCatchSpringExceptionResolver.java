@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class JCatchSpringExceptionResolver implements HandlerExceptionResolver {
 
-    private JCatchClient jCatchClient;
+    protected JCatchClient jCatchClient;
 
     public void setjCatchClient(JCatchClient jCatchClient) {
         this.jCatchClient = jCatchClient;
