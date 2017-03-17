@@ -9,7 +9,7 @@ import java.io.IOException;
  */
 public class SpringAsycJCatchClient extends JCatchClient {
 
-    private ThreadPoolTaskExecutor executor;
+    protected ThreadPoolTaskExecutor executor;
 
     public void setExecutor(ThreadPoolTaskExecutor executor) {
         this.executor = executor;
