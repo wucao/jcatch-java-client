@@ -15,12 +15,22 @@ public class JCatchClient {
 
     private String baseUrl;
     private String appId;
+    private String secretKey;
 
     public JCatchClient() {}
 
-    public JCatchClient(String baseUrl, String appId) {
+    public JCatchClient(String baseUrl, String appId, String secretKey) {
         this.baseUrl = baseUrl;
         this.appId = appId;
+        this.secretKey = secretKey;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 
     public String getBaseUrl() {

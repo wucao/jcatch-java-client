@@ -10,7 +10,7 @@
     <dependency>
         <groupId>com.xxg.jcatch</groupId>
         <artifactId>jcatch-client</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
     </dependency>
 </dependencies>
 ```
@@ -19,7 +19,7 @@
 try {
     ....
 } catch (Exception e) {
-    JCatchClient jCatchClient = new JCatchClient("[your host]", "[your appId]");
+    JCatchClient jCatchClient = new JCatchClient("[your host]", "[your appId]", "[your secretKey]");
     jCatchClient.submit(e);
 }
 ```
@@ -38,6 +38,7 @@ try {
     <bean id="springAsycJCatchClient" class="com.xxg.jcatch.client.SpringAsycJCatchClient">
         <property name="appId" value="[your appId]" />
         <property name="baseUrl" value="[your host]" />
+        <property name="secretKey" value="[your secretKey]" />
         <property name="executor" ref="taskExecutor" />
     </bean>
 
