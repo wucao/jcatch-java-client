@@ -1,11 +1,8 @@
 package com.xxg.jcatch.client;
 
-import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.URLEncoder;
 
 /**
@@ -51,14 +48,26 @@ public class JCatchClient {
 
     public void submit(Exception e)  {
         try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutputStream.writeObject(e);
-            IOUtils.closeQuietly(objectOutputStream);
-            byte[] bytes = byteArrayOutputStream.toByteArray();
-            String res = HttpUtil.post(baseUrl + "/api/submitException?appId=" + URLEncoder.encode(appId, "UTF-8"), bytes, "UTF-8", "application/octet-stream");
-            JSONObject jsonObject = new JSONObject(res);
-            if (!jsonObject.getBoolean("success")) {
+            StringWriter writer = new StringWriter();
+            e.printStackTrace(new PrintWriter(writer, true));
+            String stackTrace = writer.toString();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("stackTrace", stackTrace);
+            jsonObject.put("exceptionName", e.getClass().getName());
+            jsonObject.put("message", e.getMessage());
+            if(e.getStackTrace() != null && e.getStackTrace().length > 0) {
+                StackTraceElement element = e.getStackTrace()[0];
+                jsonObject.put("className", element.getClassName());
+                jsonObject.put("fileName", element.getFileName());
+                jsonObject.put("methodName", element.getMethodName());
+                jsonObject.put("lineNumber", element.getLineNumber());
+            }
+
+            String res = HttpUtil.post(baseUrl + "/api/submitExceptionJson?appId=" + URLEncoder.encode(appId, "UTF-8"),
+                    jsonObject.toString().getBytes("UTF-8"), "UTF-8", "application/octet-stream");
+            JSONObject response = new JSONObject(res);
+            if (!response.getBoolean("success")) {
                 throw new IOException("Submit failed: " + res);
             }
         } catch (Exception exception) {
