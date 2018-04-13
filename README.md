@@ -1,5 +1,5 @@
 ## Building with Maven
-```
+``` xml
 <repositories>
     <repository>
         <id>xxg-repository</id>
@@ -10,12 +10,12 @@
     <dependency>
         <groupId>com.xxg.jcatch</groupId>
         <artifactId>jcatch-client</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
     </dependency>
 </dependencies>
 ```
 ## Java client
-```
+``` java
 try {
     ....
 } catch (Exception e) {
@@ -24,7 +24,7 @@ try {
 }
 ```
 ## Running with Spring MVC
-```
+``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -47,4 +47,17 @@ try {
         <property name="jCatchClient" ref="springAsycJCatchClient" />
     </bean>
 </beans>
+```
+
+## JCatchSpringExceptionResolver exclude Exceptions
+``` xml
+<bean class="com.xxg.jcatch.client.JCatchSpringExceptionResolver">
+    <property name="jCatchClient" ref="springAsycJCatchClient" />
+    <property name="excludedExceptionClasses">
+        <array>
+            <value>org.springframework.security.access.AccessDeniedException</value>
+            <value>org.eclipse.jetty.io.EofException</value>
+        </array>
+    </property>
+</bean>
 ```
